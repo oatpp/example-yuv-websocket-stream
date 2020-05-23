@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type = "text/javascript">
+
+        let stream = true;
+        function initStream() {
+
+            const loadingMessage = document.getElementById("loadingMessage");
+            const c = document.getElementById("streamdata");
+            const ctx = c.getContext("2d");
+
+            if ("WebSocket" in window) {
+                let proto = "wss";
+                if(window.location.protocol === "http:") {
+                    proto  = "ws";
+                }
+
+                let ws = new WebSocket(proto + "://" + window.location.hostname + ":" + window.location.port + "/v0/cam/stream/ws");
+                ws.binaryType = "arraybuffer";
+
+                ws.onopen = function() {
+                };
+
+                ws.onmessage = function (evt) {
+                    const received_msg = new Uint8ClampedArray(evt.data);
+
+                    if(received_msg.length > 0 && stream === true) {
+                        loadingMessage.hidden = true;
+
+                        const imgData = ctx.createImageData(640, 480);
+                        const grayScale = new Uint8Array(640*480);
+                        let i, j, g;
+                        for (i = 0, j = 0, g = 0; i < imgData.data.length && j < received_msg.length; i += 8, j += 4, g+= 2) {
+                            const y1  = received_msg[j  ];
+                            const u   = received_msg[j+1];
+                            const y2  = received_msg[j+2];
+                            const v   = received_msg[j+3];
+
+                            grayScale[g]   = y1;
+                            grayScale[g+1] = y2;
+                            imgData.data[i    ] = Math.min(255, Math.max(0, Math.floor(y1+1.4075*(v-128))));
+                            imgData.data[i + 1] = Math.min(255, Math.max(0, Math.floor(y1-0.3455*(u-128)-(0.7169*(v-128)))));
+                            imgData.data[i + 2] = Math.min(255, Math.max(0, Math.floor(y1+1.7790*(u-128))));
+                            imgData.data[i + 3] = 255;
+                            imgData.data[i + 4] = Math.min(255, Math.max(0, Math.floor(y2+1.4075*(v-128))));
+                            imgData.data[i + 5] = Math.min(255, Math.max(0, Math.floor(y2-0.3455*(u-128)-(0.7169*(v-128)))));
+                            imgData.data[i + 6] = Math.min(255, Math.max(0, Math.floor(y2+1.7790*(u-128))));
+                            imgData.data[i + 7] = 255;
+                        }
+                        ctx.putImageData(imgData, 0, 0);
+                    }
+                };
+
+                ws.onclose = function() {
+
+                };
+            } else {
+                loadingMessage.innerText = "Unable to access video stream (please make sure your browser supports canvas and websockets)";
+            }
+        }
+    </script>
+    <style>
+        body {
+            color: #333;
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+
+            /*background-position: 25% 25%;*/
+            background-size: 100%;
+        }
+
+        h1 {
+            margin: 10px 0;
+            font-size: 40px;
+        }
+
+        #loadingMessage {
+            text-align: center;
+            padding: 40px;
+            background: #f7f7f7;
+            border-radius: 10px;
+        }
+
+        #streamdata {
+            border-radius: 10px;
+        }
+
+        #output div {
+            padding-bottom: 25px;
+            word-wrap: break-word;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Webstream</title>
+</head>
+<body>
+<div id="loadingMessage">Loading video ...</div>
+<canvas id="streamdata" width="640" height="480">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+<script>
+    initStream();
+</script>
+</body>
+</html>
