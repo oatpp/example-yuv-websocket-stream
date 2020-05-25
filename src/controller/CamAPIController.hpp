@@ -1,10 +1,3 @@
-/**
- * @file ${FILE_NAME}
- *
- * @brief ToDo
- *
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
 
 #ifndef CONTROLLER_CAMAPICONTROLLER_HPP_
 #define CONTROLLER_CAMAPICONTROLLER_HPP_

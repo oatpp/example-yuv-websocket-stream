@@ -1,10 +1,3 @@
-/**
- * @file ${FILE_NAME}
- *
- * @brief ToDo
- *
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
 
 #include "CamAPIController.hpp"
 
@@ -22,18 +15,20 @@ apiv0::CamAPIController::~CamAPIController() {
 
 int apiv0::CamAPIController::v4lInit() {
   m_imageReceivers = ImageWSRegistry::createShared();
+  char device[12] = "/dev/videoX";
 
   if(V4LGrabber::testDevice("/dev/video0") == 0) {
-    m_grabber = std::make_shared<V4LGrabber>("/dev/video0", &CamAPIController::handle_frame, m_imageReceivers.get());
-  } else if (V4LGrabber::testDevice("/dev/video2") == 0) {
-    m_grabber = std::make_shared<V4LGrabber>("/dev/video2", &CamAPIController::handle_frame, m_imageReceivers.get());
+    device[10] = '0';
   } else if (V4LGrabber::testDevice("/dev/video1") == 0) {
-    m_grabber = std::make_shared<V4LGrabber>("/dev/video1", &CamAPIController::handle_frame, m_imageReceivers.get());
+    device[10] = '1';
+  } else if (V4LGrabber::testDevice("/dev/video2") == 0) {
+    device[10] = '2';
   } else {
     OATPP_LOGE(TAGCam, "Non of the tested /dev/video devices could be opened");
     return -1;
   }
 
+  m_grabber = std::make_shared<V4LGrabber>(device, &CamAPIController::handle_frame, m_imageReceivers.get(), V4LGrabber::IO_METHOD_MMAP);
   m_imagewsConnectionHandler = oatpp::websocket::ConnectionHandler::createShared();
   m_imagewsConnectionHandler->setSocketInstanceListener(std::make_shared<ImageWSInstanceListener>(m_imageReceivers, m_grabber));
   m_v4linit = true;

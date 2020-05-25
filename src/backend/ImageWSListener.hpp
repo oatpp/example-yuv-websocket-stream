@@ -1,10 +1,4 @@
-/**
- * @file ${FILE_NAME}
- *
- * @brief ToDo
- *
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
+
 #ifndef IMAGEWSLISTENER_HPP_
 #define IMAGEWSLISTENER_HPP_
 

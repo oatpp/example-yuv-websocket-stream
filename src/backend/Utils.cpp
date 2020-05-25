@@ -1,10 +1,4 @@
-/**
- * @file Utils.cpp
- *
- * @brief ToDo
- * 
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
+
 #include "Utils.hpp"
 oatpp::String Utils::getExtension(const oatpp::String &filename) {
   v_int32 dotPos = 0;

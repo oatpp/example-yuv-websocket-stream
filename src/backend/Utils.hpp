@@ -1,10 +1,4 @@
-/**
- * @file Utils.hpp
- *
- * @brief ToDo
- * 
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
+
 #ifndef SRC_BACKEND_UTILS_HPP
 #define SRC_BACKEND_UTILS_HPP
 

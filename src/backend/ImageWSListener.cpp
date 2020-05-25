@@ -1,10 +1,3 @@
-/**
- * @file ${FILE_NAME}
- *
- * @brief ToDo
- *
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
 
 #include "ImageWSListener.hpp"
 

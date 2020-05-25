@@ -1,10 +1,3 @@
-/**
- * @file ${FILE_NAME}
- *
- * @brief ToDo
- *
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
 
 #include "V4LGrabber.hpp"
 
@@ -613,7 +606,8 @@ int V4LGrabber::init_device()
       init_read(fmt.fmt.pix.sizeimage);
       break;
 
-    case IO_METHOD_MMAP:init_mmap();
+    case IO_METHOD_MMAP:
+      init_mmap();
       break;
 
     case IO_METHOD_USERPTR:
@@ -685,14 +679,15 @@ int V4LGrabber::testDevice(const char *device) {
 }
 
 
-V4LGrabber::V4LGrabber(const char *device, void(*imagecb)(void*, const void*, int), void* userdata)
+V4LGrabber::V4LGrabber(const char *device, void(*imagecb)(void*, const void*, int), void* userdata, io_method iom)
   : m_devname(device)
   , m_initdone(false)
   , m_imagecb(imagecb)
   , m_userdata(userdata)
   , m_buffers(nullptr)
   , m_nbuffers(0)
-  , m_capturing(false) {
+  , m_capturing(false)
+  , m_io(iom) {
 
 }
 

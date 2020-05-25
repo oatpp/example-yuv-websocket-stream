@@ -1,10 +1,3 @@
-/**
- * @file ${FILE_NAME}
- *
- * @brief ToDo
- *
- * @author Benedikt-Alexander Mokroß <oatpp@bamkrs.de>
- */
 
 #ifndef V4LGRABBER_HPP_
 #define V4LGRABBER_HPP_
@@ -17,7 +10,13 @@
 class V4LGrabber {
 
  public:
-  V4LGrabber(const char* device, void(*imagecb)(void*, const void*, int), void* userdata);
+  enum io_method {
+    IO_METHOD_READ,
+    IO_METHOD_MMAP,
+    IO_METHOD_USERPTR,
+  };
+
+  V4LGrabber(const char* device, void(*imagecb)(void*, const void*, int), void* userdata, io_method iom = IO_METHOD_MMAP);
   ~V4LGrabber();
 
   int stop_capturing();
@@ -26,12 +25,6 @@ class V4LGrabber {
   static int testDevice(const char* device);
 
  private:
-
-  enum io_method {
-    IO_METHOD_READ,
-    IO_METHOD_MMAP,
-    IO_METHOD_USERPTR,
-  };
 
   struct buffer {
     void   *start;

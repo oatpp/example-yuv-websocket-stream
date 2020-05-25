@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(yuv-websocket)
+project(example-yuv-websocket-stream)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -7,7 +7,7 @@ if(NOT UNIX)
     message( FATAL_ERROR "This example only targets Linux systems with V4L2 development libs installed!" )
 endif(NOT UNIX)
 
-add_library(yuv-websocket-lib
+add_library(example-yuv-websocket-stream-lib
         src/AppComponent.hpp
         src/SwaggerComponent.hpp
         src/controller/CamAPIController.hpp
@@ -22,7 +22,7 @@ add_library(yuv-websocket-lib
 
 ## include directories
 
-target_include_directories(yuv-websocket-lib PUBLIC src)
+target_include_directories(example-yuv-websocket-stream-lib PUBLIC src)
 
 
 ## link libs
@@ -31,7 +31,7 @@ find_package(oatpp            1.1.0 REQUIRED)
 find_package(oatpp-swagger    1.1.0 REQUIRED)
 find_package(oatpp-websocket  1.1.0 REQUIRED)
 
-target_link_libraries(yuv-websocket-lib
+target_link_libraries(example-yuv-websocket-stream-lib
         PUBLIC oatpp::oatpp
         PUBLIC oatpp::oatpp-swagger
         PUBLIC oatpp::oatpp-websocket
@@ -44,8 +44,8 @@ add_definitions(-DWWW_FOLDER="${CMAKE_CURRENT_SOURCE_DIR}/res")
 
 ## add executables
 
-add_executable(yuv-websocket-exe
+add_executable(example-yuv-websocket-stream-exe
         src/App.cpp
 )
 
-target_link_libraries(yuv-websocket-exe yuv-websocket-lib)
+target_link_libraries(example-yuv-websocket-stream-exe example-yuv-websocket-stream-lib)
