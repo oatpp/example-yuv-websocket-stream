@@ -39,7 +39,7 @@ target_link_libraries(example-yuv-websocket-stream-lib
 
 ## define path to swagger-ui res folder
 
-add_definitions(-DOATPP_SWAGGER_RES_PATH="${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res")
+add_definitions(-DOATPP_SWAGGER_RES_PATH="${OATPP_BASE_DIR}/bin/oatpp-swagger/res")
 add_definitions(-DWWW_FOLDER="${CMAKE_CURRENT_SOURCE_DIR}/res")
 
 ## add executables
@@ -49,3 +49,11 @@ add_executable(example-yuv-websocket-stream-exe
 )
 
 target_link_libraries(example-yuv-websocket-stream-exe example-yuv-websocket-stream-lib)
+
+add_executable(example-yuv-websocket-stream-test
+        test/tests.cpp
+)
+target_link_libraries(example-yuv-websocket-stream-test example-yuv-websocket-stream-lib)
+
+enable_testing()
+add_test(project-tests example-yuv-websocket-stream-test)

@@ -1,4 +1,4 @@
-# Example-YUV-Websocket-Stream
+# Example-YUV-Websocket-Stream [![Build Status](https://dev.azure.com/lganzzzo/lganzzzo/_apis/build/status/oatpp.example-yuv-websocket-stream?branchName=master)](https://dev.azure.com/lganzzzo/lganzzzo/_build/latest?definitionId=25&branchName=master)
 
 Example project how-to create a YUV image stream from a V4L device (i.E. Webcam) using websockets.
 The raw YUV image stream is send via a websocket connection. In the example Webpage, this YUV stream is converted to an HTML5 Canvas using JavaScript. 
