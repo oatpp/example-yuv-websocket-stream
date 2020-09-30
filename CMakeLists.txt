@@ -27,9 +27,9 @@ target_include_directories(example-yuv-websocket-stream-lib PUBLIC src)
 
 ## link libs
 
-find_package(oatpp            1.1.0 REQUIRED)
-find_package(oatpp-swagger    1.1.0 REQUIRED)
-find_package(oatpp-websocket  1.1.0 REQUIRED)
+find_package(oatpp            1.2.0 REQUIRED)
+find_package(oatpp-swagger    1.2.0 REQUIRED)
+find_package(oatpp-websocket  1.2.0 REQUIRED)
 
 target_link_libraries(example-yuv-websocket-stream-lib
         PUBLIC oatpp::oatpp
