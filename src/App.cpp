@@ -18,20 +18,15 @@ void run() {
   AppComponent components; // Create scope Environment components
   
   /* create ApiControllers and add endpoints to router */
-  
   auto router = components.httpRouter.getObject();
-  auto docEndpoints = oatpp::swagger::Controller::Endpoints::createShared();
-  
-  auto camController = apiv0::CamAPIController::createShared();
-  camController->addEndpointsToRouter(router);
-  
-  docEndpoints->pushBackAll(camController->getEndpoints());
-  
-  auto swaggerController = oatpp::swagger::Controller::createShared(docEndpoints);
-  swaggerController->addEndpointsToRouter(router);
-  
+
+  oatpp::web::server::api::Endpoints docEndpoints;
+
+  docEndpoints.append(router->addController(apiv0::CamAPIController::createShared())->getEndpoints());
+
+  router->addController(oatpp::swagger::Controller::createShared(docEndpoints));
+
   /* create server */
-  
   oatpp::network::Server server(components.serverConnectionProvider.getObject(),
                                 components.serverConnectionHandler.getObject());
   

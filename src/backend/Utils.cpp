@@ -2,14 +2,14 @@
 #include "Utils.hpp"
 oatpp::String Utils::getExtension(const oatpp::String &filename) {
   v_int32 dotPos = 0;
-  for(v_int32 i = filename->getSize() - 1; i > 0; i--) {
-    if(filename->getData()[i] == '.') {
+  for(v_int32 i = filename->size() - 1; i > 0; i--) {
+    if(filename->data()[i] == '.') {
       dotPos = i;
       break;
     }
   }
-  if(dotPos != 0 && dotPos < filename->getSize() - 1) {
-    return oatpp::String((const char*)&filename->getData()[dotPos + 1], filename->getSize() - dotPos - 1);
+  if(dotPos != 0 && dotPos < filename->size() - 1) {
+    return oatpp::String((const char*)&filename->data()[dotPos + 1], filename->size() - dotPos - 1);
   }
   return oatpp::String();
 }
@@ -18,19 +18,19 @@ oatpp::String Utils::guessMimeType(const oatpp::String &filename) {
   auto extension = getExtension(filename);
   if(extension) {
 
-    if(extension->equals("js")){
+    if(extension == "js"){
       return "application/javascript; charset=utf-8";
-    } else if(extension->equals("html")){
+    } else if(extension == "html"){
       return "text/html; charset=utf-8";
-    } else if(extension->equals("css")){
+    } else if(extension == "css"){
       return "text/css; charset=utf-8";
-    } else if(extension->equals("jpg") || extension->equals("jpeg")){
+    } else if(extension ==  "jpg" || extension == "jpeg"){
       return "image/jpeg";
-    } else if(extension->equals("png")){
+    } else if(extension == "png"){
       return "image/png";
-    } else if(extension->equals("ico")){
+    } else if(extension == "ico"){
       return "image/x-icon";
-    } else if(extension->equals("gif")){
+    } else if(extension == "gif"){
       return "image/gif";
     }
 

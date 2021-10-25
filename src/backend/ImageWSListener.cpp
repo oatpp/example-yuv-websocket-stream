@@ -32,7 +32,7 @@ int ImageWSRegistry::rm(const oatpp::websocket::WebSocket *recv) {
 
 int ImageWSRegistry::distributeImage(const void *p, int size) {
   OATPP_LOGD("ImageWSRegistry", "Distributing image");
-  oatpp::String image((const char*)p, size, true);
+  oatpp::String image((const char*)p, size);
   for(auto & it : m_registry) {
     OATPP_LOGD("ImageWSRegistry", "Sending image to %p", it);
     it->sendOneFrameBinary(image);

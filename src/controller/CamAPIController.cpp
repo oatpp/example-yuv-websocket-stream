@@ -58,7 +58,7 @@ void apiv0::CamAPIController::handle_frame(void *data, const void *image, int si
 std::shared_ptr<oatpp::web::protocol::http::outgoing::Response> apiv0::CamAPIController::stream() {
 
   try {
-    oatpp::String str = oatpp::base::StrBuffer::loadFromFile(WWW_FOLDER "/cam/wsImageView.html");
+    oatpp::String str = oatpp::String::loadFromFile(WWW_FOLDER "/cam/wsImageView.html");
     auto rsp = createResponse(Status::CODE_200, str);
     rsp->putHeader("Content-Type", "text/html; charset=utf-8");
     return rsp;
@@ -72,7 +72,7 @@ std::shared_ptr<oatpp::web::protocol::http::outgoing::Response> apiv0::CamAPICon
   try {
     oatpp::String filteredName(basename(filename->c_str()));
     oatpp::String folderName(WWW_FOLDER "/cam/");
-    oatpp::String str = oatpp::base::StrBuffer::loadFromFile((folderName + filteredName)->c_str());
+    oatpp::String str = oatpp::String::loadFromFile((folderName + filteredName)->c_str());
     auto rsp = createResponse(Status::CODE_200, str);
     rsp->putHeader("Content-Type", Utils::guessMimeType(filteredName));
     return rsp;
