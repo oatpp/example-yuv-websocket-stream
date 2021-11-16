@@ -39,7 +39,7 @@ class ImageWSListener : public oatpp::websocket::WebSocket::Listener {
   /**
    * Buffer for messages. Needed for multi-frame messages.
    */
-  oatpp::data::stream::ChunkedBuffer m_messageBuffer;
+  oatpp::data::stream::BufferOutputStream m_messageBuffer;
 
  private:
 
